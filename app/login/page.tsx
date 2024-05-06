@@ -3,11 +3,11 @@
 import FormBtn from "@/Components/form-btn";
 import FormInput from "@/Components/form-input";
 import SocialLogin from "@/Components/social-login-section";
-import Link from "next/link";
 import { useFormState } from "react-dom";
 import { handleForm } from "./action";
+import ToCreateAccount from "@/Components/link-createAccount";
 
-export default function page() {
+export default function Login() {
   const [state, action] = useFormState(handleForm, null);
 
   return (
@@ -39,15 +39,7 @@ export default function page() {
       <div className="flex flex-col gap-5">
         <SocialLogin />
       </div>
-      <div className="flex gap-2 justify-center">
-        <span>계정이 없으신가요?</span>
-        <Link
-          className="hover:underline hover:text-orange-600"
-          href={"/create-account"}
-        >
-          시작하기
-        </Link>
-      </div>
+      <ToCreateAccount />
     </div>
   );
 }

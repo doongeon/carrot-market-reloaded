@@ -1,5 +1,6 @@
 import FormBtn from "@/Components/form-btn";
 import FormInput from "@/Components/form-input";
+import ToCreateAccount from "@/Components/link-createAccount";
 import SocialLogin from "@/Components/social-login-section";
 import Link from "next/link";
 
@@ -15,18 +16,13 @@ export default function page() {
           <FormInput type="number" placeholder="전화번호" errors={[]} name="phoneNumber"/>
           <FormInput type="password" placeholder="인증번호" errors={[]} name="verifyNumber"/>
         </form>
-        <FormBtn text="로그인" loading={false} />
+        <FormBtn text="로그인" />
       </div>
       <div className="h-px bg-neutral-600 w-full"></div>
       <div className="flex flex-col gap-5">
         <SocialLogin />
       </div>
-      <div className="flex gap-2 justify-center">
-        <span>계정이 없으신가요?</span>
-        <Link className="hover:underline hover:text-orange-600" href={"/create-account"}>
-          시작하기
-        </Link>
-      </div>
+      <ToCreateAccount />
     </div>
   );
 }
