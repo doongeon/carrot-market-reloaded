@@ -1,24 +1,21 @@
+import { HTMLAttributes, HTMLProps } from "react";
+
 interface FormInputProps {
-  type: string;
-  placeholder: string;
-  errors?: string[];
   name: string;
+  errors?: string[];
 }
 
 export default function FormInput({
-  type,
-  placeholder,
-  errors,
   name,
-}: FormInputProps) {
+  errors,
+  ...res
+}: FormInputProps & HTMLProps<HTMLInputElement>) {
   return (
     <div className="flex h-28 flex-col gap-2">
-      <label htmlFor={`input_${name}`}>{placeholder}</label>
       <input
         id={`input_${name}`}
         className="bg-neutral-900 w-full h-12 px-3 ring-2 ring-neutral-700 rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-600 placeholder:text-lg transition"
-        type={type}
-        placeholder={placeholder}
+        {...res}
         name={name}
       />
       {errors?.map((error, index) => (

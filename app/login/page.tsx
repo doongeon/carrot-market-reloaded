@@ -7,6 +7,7 @@ import { useFormState } from "react-dom";
 import { handleForm } from "./action";
 import ToCreateAccount from "@/Components/link-createAccount";
 
+
 export default function Login() {
   const [state, action] = useFormState(handleForm, null);
 
@@ -22,13 +23,14 @@ export default function Login() {
             <FormInput
               type="email"
               placeholder="Email"
-              errors={[]}
+              errors={state?.fieldErrors?.email}
               name="email"
             />
             <FormInput
               type="password"
               placeholder="Password"
-              errors={state?.errors ?? []}
+              errors={state?.fieldErrors?.password}
+              minLength={6}
               name="password"
             />
           </div>
