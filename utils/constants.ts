@@ -1,1 +1,0 @@
-export const FORM_ERR_MSG_INVALID_PHONENUMBER = "유효하지 않은 전화번호 입니다."
