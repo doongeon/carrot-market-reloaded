@@ -1,19 +1,12 @@
 "use server";
 
+import db from "@/libs/db";
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import bcrypt from "bcrypt";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
+import { formSchema } from "./validation";
 
-const formSchema = z
-  .object({
-    userName: z.string().min(2).max(10),
-    email: z.string().email(),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6),
-  })
-  .refine((dataForm) => dataForm.password === dataForm.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "비밀번호가 다릅니다.",
-  });
 
 export async function createAccount(prevState: any, formData: FormData) {
   const data = {
@@ -23,10 +16,31 @@ export async function createAccount(prevState: any, formData: FormData) {
     confirmPassword: formData.get("confirmPassword"),
   };
 
-  const zodResult = formSchema.safeParse(data);
+  const zodResult = await formSchema.safeParseAsync(data);
+
   if (!zodResult.success) {
     return zodResult.error.flatten();
   }
 
   // create account
+  const user = await db.user.create({
+    data: {
+      username: zodResult.data.userName,
+      email: zodResult.data.email,
+      password: await bcrypt.hash(zodResult.data.password, 12),
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  const session = await getIronSession<{ id: number }>(cookies(), {
+    cookieName: "orange-cookie",
+    password: process.env.COOKIE_PW!,
+  });
+
+  session.id = user.id;
+  session.save();
+
+  redirect("/profile");
 }
