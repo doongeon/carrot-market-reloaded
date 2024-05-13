@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/libs/db";
+import { getSession } from "@/libs/getSession";
 import bcryp from "bcrypt";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
@@ -53,13 +54,9 @@ export const handleForm = async (prevState: any, formData: FormData) => {
   const ok = await bcryp.compare(zodResult.data.password, user!.password!);
 
   if (ok) {
-    const session = await getIronSession(cookies(), {
-      cookieName: "orange-cookie",
-      password: process.env.COOKIE_PW!,
-    });
-
+    const session = await getSession();
+    session.id = user?.id;
     await session.save();
-
     redirect("/profile");
   } else {
     return {

@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { formSchema } from "./validation";
-
+import { getSession } from "@/libs/getSession";
 
 export async function createAccount(prevState: any, formData: FormData) {
   const data = {
@@ -34,11 +34,7 @@ export async function createAccount(prevState: any, formData: FormData) {
     },
   });
 
-  const session = await getIronSession<{ id: number }>(cookies(), {
-    cookieName: "orange-cookie",
-    password: process.env.COOKIE_PW!,
-  });
-
+  const session = await getSession();
   session.id = user.id;
   session.save();
 
