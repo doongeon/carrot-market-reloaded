@@ -1,12 +1,19 @@
-import { resolve } from "path";
-import { useEffect } from "react";
+import ProductList from "@/Components/product-list";
+import db from "@/libs/db";
 
-const delay = new Promise((resolve) => {
-  setTimeout(resolve, 6000);
-});
+export const NUM_ITEMS_ON_PAGE = 2;
 
 export default async function Products() {
-  const loading = await delay;
+  const products = await db.product.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: NUM_ITEMS_ON_PAGE,
+  });
 
-  return <div>products</div>;
+  return (
+    <div className="flex justify-center">
+      <ProductList initialProducts={products} />
+    </div>
+  );
 }
