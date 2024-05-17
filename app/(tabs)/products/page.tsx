@@ -1,5 +1,7 @@
 import ProductList from "@/Components/product-list";
 import db from "@/libs/db";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 export const NUM_ITEMS_ON_PAGE = 2;
 
@@ -12,8 +14,14 @@ export default async function Products() {
   });
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center relative">
       <ProductList initialProducts={products} />
+      <Link
+        href={"/products/add"}
+        className="fixed bottom-20 right-5 size-10 bg-orange-600 rounded-full flex items-center justify-center hover:opacity-80"
+      >
+        <PlusIcon className="size-7" />
+      </Link>
     </div>
   );
 }
