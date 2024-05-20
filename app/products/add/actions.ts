@@ -51,3 +51,17 @@ export async function addProduct(_: any, formData: FormData) {
   }
 
 }
+
+export async function getUsername(sessionId: number) {
+  const user = await db.user.findUnique({
+    where: {
+      id: sessionId
+    },
+    select: {
+      username: true,
+    }
+  })
+
+  if(!user) redirect("/");
+  return user.username;
+}

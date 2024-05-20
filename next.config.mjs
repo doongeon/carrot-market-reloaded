@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "source.unsplash.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "bg3-dict.s3.ap-northeast-2.amazonaws.com",
+        port: "",
+      },
     ],
   },
 };

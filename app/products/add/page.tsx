@@ -4,30 +4,34 @@ import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useFormState } from "react-dom";
 import { addProduct } from "./actions";
 import { useState } from "react";
+import { deleteS3Object, getAWSClient, postS3Object } from "@/libs/aws";
+import { S3_URL } from "@/libs/secrets";
+
+function getPhotoURL(photoKey: string) {
+  return `${S3_URL}/${encodeURI(photoKey)}`;
+}
 
 export default function AddProduct() {
-  const [photoUrl, setPhotoUrl] = useState("");
   const [state, dispatch] = useFormState(addProduct, null);
+  const [photoKey, setPhotoKey] = useState("");
 
-  const onUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { files },
     } = e;
-
     if (!files) return;
-
     const file = files[0];
+    const client = getAWSClient();
+    const newPhotoKey = `${file.name}`;
 
-    const url = URL.createObjectURL(file);
-    
-    // save on my directory
-    // post public url
+    await postS3Object(client, file, newPhotoKey);
+    if (photoKey !== "") await deleteS3Object(client, photoKey);
+    setPhotoKey(newPhotoKey);
   };
 
   const preDispatch = (formData: FormData) => {
-    formData.append("photo", photoUrl);
-
-    return addProduct(null, formData);
+    formData.set("photo", getPhotoURL(photoKey));
+    return dispatch(formData);
   };
 
   return (
@@ -36,10 +40,16 @@ export default function AddProduct() {
         <label
           htmlFor="photo"
           className="aspect-square border-2 border-neutral-800 border-dashed flex flex-col justify-center items-center"
+          style={{
+            backgroundImage: `url(${getPhotoURL(photoKey)})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           <PhotoIcon className="size-20" />
           <span>이미지 불러오기</span>
         </label>
+        <span>{state?.fieldErrors.photo}</span>
         <input
           id="photo"
           type="file"
@@ -51,6 +61,7 @@ export default function AddProduct() {
           <label htmlFor="title" className="pl-3">
             제목
           </label>
+          <span>{state?.fieldErrors.title}</span>
           <input
             id="title"
             type="text"
@@ -61,6 +72,7 @@ export default function AddProduct() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="price">가격</label>
+          <span>{state?.fieldErrors.price}</span>
           <input
             id="price"
             type="text"
@@ -71,6 +83,7 @@ export default function AddProduct() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="description">설명</label>
+          <span>{state?.fieldErrors.description}</span>
           <input
             id="description"
             type="text"
