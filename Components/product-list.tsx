@@ -1,6 +1,6 @@
 "use client";
 
-import { getMoreProducts } from "@/app/(tabs)/products/action";
+import { getMoreProducts } from "@/app/(tabs)/home/action";
 import { formatToTimeAge, formatToWon } from "@/libs/utils";
 import Image from "next/image";
 import Link from "next/link";

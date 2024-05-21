@@ -24,10 +24,10 @@ export default function TapBar() {
   return (
     <div className="fixed bottom-0 w-full max-w-screen-md mx-auto border-t-orange-600 border-t py-2 px-3 grid grid-cols-5 bg-inherit">
       <Link
-        href={"/products"}
+        href={"/home"}
         className="flex flex-col gap-1 items-center text-xs "
       >
-        {pathname === "/products" ? (
+        {pathname === "/home" ? (
           <FilledHomeIcon className="size-6 text-orange-600" />
         ) : (
           <LineHomeIcon className="size-6 text-orange-600" />
