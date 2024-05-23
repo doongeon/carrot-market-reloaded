@@ -20,7 +20,7 @@ export default async function Products() {
         href={"/products/add"}
         className="fixed bottom-20 right-5 size-10 bg-orange-600 rounded-full flex items-center justify-center hover:opacity-80"
       >
-        <PlusIcon className="size-7" />
+        <PlusIcon className="size-8" />
       </Link>
     </div>
   );
