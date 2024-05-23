@@ -1,3 +1,6 @@
+"use client"
+
+import { deleteUser, getUsers, putUser } from "@/libs/aws";
 import Link from "next/link";
 
 export default function Home() {
@@ -8,6 +11,9 @@ export default function Home() {
         <h1 className="text-4xl">당근</h1>
         <h2 className="text-2xl">안녕하세요 당근마켓입니다.</h2>
       </div>
+      <button onClick={deleteUser}>delete user</button>
+      <button onClick={getUsers}>get user</button>
+      <button onClick={putUser}>put user</button>
       <div className="w-full flex flex-col gap-3 items-center">
         <Link className="primary-btn h-10" href={"/create-account"}>
           시작하기
