@@ -12,6 +12,11 @@ const nextConfig = {
         hostname: "bg3-dict.s3.ap-northeast-2.amazonaws.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+      },
     ],
   },
 };

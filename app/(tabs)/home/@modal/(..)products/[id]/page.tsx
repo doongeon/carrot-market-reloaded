@@ -1,28 +1,14 @@
 import Image from "next/image";
 import Modal from "./modal";
-import db from "@/libs/db";
-import { NotFound } from "@aws-sdk/client-s3";
 import { notFound } from "next/navigation";
 import { UserIcon } from "@heroicons/react/24/solid";
-import { formatToWon } from "@/libs/utils";
+import ProductFooter from "@/Components/product-footer";
+import { getSession } from "@/libs/getSession";
+import getProduct from "./action";
 
-async function getProduct(productId: number) {
-  const product = await db.product.findUnique({
-    where: {
-      id: productId,
-    },
-    include: {
-      user: {
-        select: {
-          username: true,
-          avatar: true,
-        },
-      },
-    },
-  });
 
-  return product;
-}
+
+
 
 export default async function InterceptProducts({
   params: { id: productId },
@@ -30,6 +16,7 @@ export default async function InterceptProducts({
   params: { id: number };
 }) {
   const product = await getProduct(Number(productId));
+  const session = await getSession();
 
   if (!product) notFound();
 
@@ -56,10 +43,7 @@ export default async function InterceptProducts({
           </div>
         </div>
       </div>
-      <div className="fixed z-[100] w-full bottom-0 left-0 h-10 bg-neutral-800 flex justify-between items-center p-5 rounded-t-lg">
-        <span>{formatToWon(product.price)}원</span>
-        <span className="text-orange-600">채팅하기</span>
-      </div>
+      <ProductFooter sessionId={session.id!} product={product}/>
     </Modal>
   );
 }

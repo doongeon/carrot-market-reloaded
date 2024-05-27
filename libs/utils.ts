@@ -1,3 +1,5 @@
+import db from "./db";
+
 export function formatToTimeAge(date: Date): string {
   const time = new Date(date).getTime()
   const now = new Date().getTime()

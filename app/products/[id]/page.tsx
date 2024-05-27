@@ -1,48 +1,16 @@
-import FormBtn from "@/Components/form-btn";
-import db from "@/libs/db";
+import ProductFooter from "@/Components/product-footer";
+import getProduct from "@/app/(tabs)/home/@modal/(..)products/[id]/action";
 import { getSession } from "@/libs/getSession";
-import { formatToWon } from "@/libs/utils";
 import { UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  photo: string;
-  createdAt: Date;
-  updateAt: Date;
-  userId: number;
-}
-
-const checkProductId = (id: string) => {
-  if (!Number(id)) notFound();
-};
-
-const getProduct = async (id: number) => {
-  return await db.product.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      user: {
-        select: {
-          username: true,
-          avatar: true,
-        },
-      },
-    },
-  });
-};
 
 export default async function ProductDetail({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  checkProductId(id);
+  if (!Number(id)) notFound();
 
   const product = await getProduct(Number(id));
 
@@ -73,15 +41,7 @@ export default async function ProductDetail({
           <span>{product.description}</span>
         </div>
       </div>
-      <div className="fixed bottom-0 left-[50%] -translate-x-1/2 w-full max-w-screen-md bg-black flex items-center justify-between py-5 px-5 rounded-t-3xl ">
-        <span className="text-sm">{`${formatToWon(product.price)}원`}</span>
-        {session.id === product.userId ? (
-          <div className="primary-btn w-max px-2 bg-red-500 text-base">
-            삭제
-          </div>
-        ) : null}
-        <span className="text-sm text-orange-600">채팅하기</span>
-      </div>
+      <ProductFooter sessionId={session.id!} product={product} />
     </div>
   );
 }
