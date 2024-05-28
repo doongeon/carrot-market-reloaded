@@ -1,10 +1,7 @@
-import FormBtn from "@/Components/form-btn";
 import { getSession } from "@/libs/getSession";
 import { notFound } from "next/navigation";
 import { getChatRoom, getMessages } from "./action";
 import ChatList from "@/Components/chat-list";
-import { Prisma } from "@prisma/client";
-import db from "@/libs/db";
 
 export default async function ChatRoom({ params }: { params: { id: string } }) {
   const chatRoom = await getChatRoom(params.id);

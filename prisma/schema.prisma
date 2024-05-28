@@ -25,8 +25,7 @@ model User {
   updated_ad DateTime   @updatedAt
   SMSToken   SMSToken[]
   Product    Product[]
-  ChatRoom   ChatRoom?  @relation(fields: [chatRoomId], references: [id])
-  chatRoomId String?
+  ChatRoom   ChatRoom[]
   Message    Message[]
 }
 
@@ -53,7 +52,7 @@ model Product {
 
 model ChatRoom {
   id        String    @id @default(cuid())
-  users     User[]    
+  users     User[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Message   Message[]
@@ -64,7 +63,7 @@ model Message {
   payload    String
   createdAt  DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
-  chatroom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+  chatroom   ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
   userId     Int
   chatRoomId String
 }

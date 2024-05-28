@@ -1,9 +1,17 @@
 import db from "@/libs/db";
 import { Prisma } from "@prisma/client";
+import { unstable_cache as nextCache } from "next/cache";
+import { cache } from "react";
 
-export type ChatRooms = Prisma.PromiseReturnType<typeof getChatrooms>
+export type ChatRooms = Prisma.PromiseReturnType<typeof getChatrooms>;
 
-export async function getChatrooms(userId: number) {
+export const getCachedChatrooms = nextCache(
+  (userId: number) => getChatrooms(userId),
+  [`chatrooms`],
+  { revalidate: 60 }
+);
+
+async function getChatrooms(userId: number) {
   return await db.chatRoom.findMany({
     where: {
       users: {

@@ -77,7 +77,7 @@ export default function ProductList({ initialProducts }: ProductListProps) {
 
   return (
     <div className="w-full flex flex-col gap-1 items-center mb-20">
-      <div className="w-full flex flex-col gap-2 sm:grid sm:grid-cols-2 items-center mb-12 ">
+      <div className="w-full flex flex-col gap-2 sm:grid sm:grid-cols-2 items-center mb-12 place-items-center">
         {products.map((product) => {
           return (
             <Link

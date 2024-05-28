@@ -22,7 +22,7 @@ export default function TapBar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 w-full max-w-screen-md mx-auto border-t-orange-600 border-t py-2 px-3 grid grid-cols-5 bg-inherit">
+    <div className="fixed bottom-0 left-50 w-full max-w-screen-md mx-auto border-t-orange-600 border-t py-2 px-3 grid grid-cols-5 bg-inherit -translate-x-2">
       <Link
         href={"/home"}
         className="flex flex-col gap-1 items-center text-xs "

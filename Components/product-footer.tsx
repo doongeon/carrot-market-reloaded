@@ -12,8 +12,6 @@ interface ProductFooterProps {
   product: Product;
 }
 
-
-
 export default function ProductFooter({
   sessionId,
   product,

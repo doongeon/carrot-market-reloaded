@@ -68,6 +68,8 @@ export default function ChatList({
   };
 
   useEffect(() => {
+    localStorage.setItem(`chatroomlog_${chatRoomId}`, Date.now() + "");
+
     const client = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
 
     channel.current = client.channel(`room-${chatRoomId}`);
@@ -82,15 +84,18 @@ export default function ChatList({
 
     return () => {
       channel.current?.unsubscribe();
+      localStorage.setItem(`chatroomlog_${chatRoomId}`, Date.now() + "");
     };
   }, [chatRoomId]);
 
   return (
     <>
-      <div className="fixed w-full top-0 left-0 p-2 bg-black z-10">
-        <button className="primary-btn w-10 h-8" onClick={() => router.back()}>{"<"}</button>
+      <div className="fixed w-full max-w-screen-md top-0 left-50 rounded-b-lg p-3 bg-black z-10">
+        <button className="primary-btn w-10 h-8" onClick={() => router.back()}>
+          {"<"}
+        </button>
       </div>
-      <div className="flex flex-col gap-3 justify-end overflow-y-scroll mb-10 mt-10">
+      <div className="flex flex-col gap-3 justify-end overflow-y-scroll mb-10 mt-12">
         {msgs.map((msg) => {
           return (
             <div
@@ -110,16 +115,20 @@ export default function ChatList({
                 {userId === msg.userId ? null : (
                   <span className="text-xs">{msg.user.username}</span>
                 )}
-
-                <span className="bg-orange-600 px-2 text-sm flex justify-center items-center rounded-md">
-                  {msg.payload}
-                </span>
+                <div className="flex gap-2 items-end">
+                  <span className="bg-orange-600 px-2 text-sm md:text-base flex justify-center items-center rounded-md">
+                    {msg.payload}{" "}
+                  </span>
+                </div>
               </div>
             </div>
           );
         })}
       </div>
-      <form className="fixed bottom-0 left-0 w-full p-3 z-10 bg-black flex gap-3 h-14" onSubmit={onSubmit}>
+      <form
+        className="fixed bottom-5 left-50 w-full max-w-screen-md p-4 z-10 bg-black flex gap-3 h-16 rounded-lg"
+        onSubmit={onSubmit}
+      >
         <input
           type="text"
           className="w-full bg-black outline-none ring-1 ring-white rounded-lg px-2 text-wrap focus:ring-2"

@@ -36,6 +36,10 @@ export async function getMessages(chatRoomId: string) {
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 10,
   });
 }
 
