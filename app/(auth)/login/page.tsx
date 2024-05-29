@@ -4,12 +4,11 @@ import FormBtn from "@/Components/form-btn";
 import FormInput from "@/Components/form-input";
 import SocialLogin from "@/Components/social-login-section";
 import { useFormState } from "react-dom";
-import { handleForm } from "./action";
+import { handleLoginForm } from "./action";
 import ToCreateAccount from "@/Components/link-createAccount";
 
-
 export default function Login() {
-  const [state, action] = useFormState(handleForm, null);
+  const [loginFormState, action] = useFormState(handleLoginForm, null);
 
   return (
     <div className="min-h-screen flex flex-col gap-10 py-16 px-10">
@@ -23,13 +22,13 @@ export default function Login() {
             <FormInput
               type="email"
               placeholder="Email"
-              errors={state?.fieldErrors?.email}
+              errors={loginFormState?.fieldErrors?.email}
               name="email"
             />
             <FormInput
               type="password"
               placeholder="Password"
-              errors={state?.fieldErrors?.password}
+              errors={loginFormState?.fieldErrors?.password}
               minLength={6}
               name="password"
             />
