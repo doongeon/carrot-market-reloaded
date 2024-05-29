@@ -1,26 +1,17 @@
-import { getSession } from "@/libs/getSession";
-import { redirect } from "next/navigation";
-import { getCachedChatrooms } from "./action";
-import ChatRoomList from "@/Components/chatroom-list";
+import ChatRoomList from "./components/chatroom-list";
+import { getChatroomsViaSession, getUserIdViaSession } from "./actions";
+
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "채팅"
-}
+  title: "채팅",
+};
 
-export const dynamic = "force-dynamic"
-
+export const dynamic = "force-dynamic";
 
 export default async function Chats() {
-  const session = await getSession();
-
-  if (!session.id) redirect("/");
-
-  const userId = Number(session.id);
-
-  if (isNaN(userId)) redirect("/");
-
-  const chatrooms = await getCachedChatrooms(userId);
+  const chatrooms = await getChatroomsViaSession();
+  const userId = await getUserIdViaSession();
 
   return (
     <div className="flex flex-col gap-5">

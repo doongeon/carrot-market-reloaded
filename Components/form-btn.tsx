@@ -7,7 +7,11 @@ interface FormBtn {
   text: string;
 }
 
-export default function FormBtn({ text, type, ...res }: FormBtn & HTMLProps<HTMLButtonElement>) {
+export default function FormBtn({
+  text,
+  type,
+  ...res
+}: FormBtn & HTMLProps<HTMLButtonElement>) {
   const { pending } = useFormStatus();
 
   return (

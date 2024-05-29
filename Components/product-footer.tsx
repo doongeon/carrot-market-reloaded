@@ -1,6 +1,7 @@
 import getProduct from "@/app/(tabs)/home/@modal/(..)products/[id]/action";
 import db from "@/libs/db";
-import { getSession } from "@/libs/getSession";
+import { getSession } from "@/libs/session";
+
 import { formatToWon } from "@/libs/utils";
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -23,6 +24,7 @@ export default function ProductFooter({
   
     const chatRoom = await db.chatRoom.create({
       data: {
+        productId: product?.id!,
         users: {
           connect: [
             {id: session.id},

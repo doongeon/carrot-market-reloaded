@@ -1,54 +1,26 @@
 "use server";
 
-import db from "@/libs/db";
-import { Prisma } from "@prisma/client";
+import { getSession } from "@/libs/session";
+import { redirect } from "next/navigation";
+import { getCahcedChatRoom, getChatRoom } from "./gateway";
 
-export type ChatRoom = Prisma.PromiseReturnType<typeof getChatRoom>;
+export async function getUserOnSession() {
+  const user = await getSession();
 
-export async function getChatRoom(id: string) {
-  return await db.chatRoom.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      id: true,
-      users: true,
-    },
-  });
+  if (!user.id) redirect("/login");
+
+  return user;
 }
 
-export type initialMessages = Prisma.PromiseReturnType<typeof getMessages>;
+export async function getChatroomViaParams(chatroomId: string) {
+  const session = await getUserOnSession();
+  if (!session.id) redirect("/login");
 
-export async function getMessages(chatRoomId: string) {
-  return await db.message.findMany({
-    where: {
-      chatRoomId: chatRoomId,
-    },
-    select: {
-      id: true,
-      payload: true,
-      createdAt: true,
-      userId: true,
-      user: {
-        select: {
-          avatar: true,
-          username: true,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 10,
-  });
-}
+  const chatroom = await getCahcedChatRoom(chatroomId);
+  if (!chatroom) redirect("/chat");
 
-export async function putMessage(payload: string, chatRoomId: string,userId: number) {
-  await db.message.create({
-    data: {
-      payload,
-      chatRoomId,
-      userId
-    }
-  })
+  const ok = Boolean(chatroom?.users.find((user) => user.id === session.id));
+  if (!ok) redirect("/login");
+
+  return chatroom;
 }

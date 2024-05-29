@@ -3,10 +3,8 @@
 import db from "@/libs/db";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import { formSchema } from "./validation";
-import { getSession } from "@/libs/getSession";
+import { getSession } from "@/libs/session";
 
 export async function createAccount(prevState: any, formData: FormData) {
   const data = {

@@ -3,8 +3,9 @@ import Modal from "./modal";
 import { notFound } from "next/navigation";
 import { UserIcon } from "@heroicons/react/24/solid";
 import ProductFooter from "@/Components/product-footer";
-import { getSession } from "@/libs/getSession";
+
 import getProduct from "./action";
+import { getSession } from "@/libs/session";
 
 
 

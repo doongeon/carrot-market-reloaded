@@ -1,15 +1,9 @@
-"use client";
-
 import { SUPABASE_PUBLIC_KEY, SUPABASE_URL } from "@/libs/secrets";
 import { RealtimeChannel, createClient } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
+import { MessagePreviewProps } from "./types";
 
-interface MessagePreviewProps {
-  initialMsg: string;
-  chatRoomId: string;
-}
-
-export default function MessagePreview({
+export function useChatrommPreview({
   initialMsg,
   chatRoomId,
 }: MessagePreviewProps) {
@@ -35,5 +29,5 @@ export default function MessagePreview({
     };
   }, [chatRoomId]);
 
-  return <p>{msg}</p>;
+  return msg;
 }

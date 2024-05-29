@@ -39,23 +39,26 @@ model SMSToken {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   price       Float
   description String
   photo       String
-  createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime   @default(now())
+  updateAt    DateTime   @updatedAt
+  user        User       @relation(fields: [userId], references: [id])
   userId      Int
+  ChatRoom    ChatRoom[]
 }
 
 model ChatRoom {
   id        String    @id @default(cuid())
+  product   Product   @relation(fields: [productId], references: [id])
   users     User[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Message   Message[]
+  productId Int
 }
 
 model Message {

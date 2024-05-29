@@ -1,30 +1,29 @@
-import { getSession } from "@/libs/getSession";
-import { notFound } from "next/navigation";
-import { getChatRoom, getMessages } from "./action";
-import ChatList from "@/Components/chat-list";
+import { redirect } from "next/navigation";
+import { getSession } from "@/libs/session";
+import ChatList from "./components/chat-list";
+import { getCahcedMessages, getMessages } from "./gateway";
+import { getChatroomViaParams } from "./action";
+import { revalidatePath } from "next/cache";
+
+export const dynamic = "force-dynamic";
 
 export default async function ChatRoom({ params }: { params: { id: string } }) {
-  const chatRoom = await getChatRoom(params.id);
-
-  if (!chatRoom) notFound();
-
   const session = await getSession();
 
-  if (!session.id) notFound();
+  if (!session.id) {
+    session.destroy();
+    redirect("/login");
+  }
 
-  const match = Boolean(chatRoom?.users.find((user) => user.id === session.id));
-
-  if (!match) notFound();
-
-  const messages = await getMessages(chatRoom.id);
+  const chatroom = await getChatroomViaParams(params.id);
+  const initialMessages = (await getCahcedMessages(chatroom.id)).reverse();
 
   return (
     <div className="h-full w-full flex flex-col justify-between overflow-y-scroll">
       <ChatList
-        chatRoom={chatRoom}
-        initialMessages={messages}
+        chatroom={chatroom}
+        initialMessages={initialMessages}
         userId={session.id}
-        chatRoomId={chatRoom.id}
       />
     </div>
   );

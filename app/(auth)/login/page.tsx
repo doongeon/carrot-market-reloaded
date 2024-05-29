@@ -4,7 +4,7 @@ import FormBtn from "@/Components/form-btn";
 import FormInput from "@/Components/form-input";
 import SocialLogin from "@/Components/social-login-section";
 import { useFormState } from "react-dom";
-import { handleLoginForm } from "./action";
+import { handleLoginForm } from "./actions";
 import ToCreateAccount from "@/Components/link-createAccount";
 
 export default function Login() {
@@ -33,7 +33,7 @@ export default function Login() {
               name="password"
             />
           </div>
-          <FormBtn text="만들기" />
+          <FormBtn text="로그인" />
         </form>
       </div>
       <div className="h-px bg-neutral-600 w-full"></div>

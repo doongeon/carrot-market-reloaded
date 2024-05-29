@@ -9,6 +9,8 @@ export async function getUser(email: string) {
     select: {
       id: true,
       password: true,
+      username: true,
+      avatar: true,
     },
   });
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "./libs/getSession";
 import { NextURL } from "next/dist/server/web/next-url";
+import { getSession } from "./libs/session";
 
 export const config = {
   matcher: [
