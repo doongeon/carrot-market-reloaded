@@ -20,8 +20,8 @@ export default function ChatList({
 
   return (
     <>
-      <div className="fixed w-full max-w-screen-md top-0 left-1/2 rounded-b-lg p-3 bg-black z-10 -translate-x-1/2">
-        <Link href={"/chat"} className="primary-btn w-10 h-8">
+      <div className="fixed w-full max-w-screen-md top-0 left-1/2 rounded-b-lg p-3 bg-neutral-800 z-10 -translate-x-1/2">
+        <Link href={"/chat"} className="primary-btn size-6">
           <ArrowLeftIcon className="size-4 font-bold" />
         </Link>
       </div>
@@ -56,7 +56,7 @@ export default function ChatList({
         })}
       </div>
       <form
-        className="fixed bottom-5 left-1/2 w-[90%] max-w-screen-md p-4 z-10 bg-black flex gap-3 h-16 rounded-lg -translate-x-1/2"
+        className="fixed bottom-5 left-1/2 w-[90%] max-w-screen-md p-4 z-10 bg-neutral-800 flex gap-3 h-16 rounded-lg -translate-x-1/2"
         onSubmit={onSubmitMsg}
       >
         <input

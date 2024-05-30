@@ -1,10 +1,8 @@
 "use server";
 
 import db from "@/libs/db";
-import { getSession } from "@/libs/getSession";
-import { time } from "console";
+import { getSession } from "@/libs/session";
 import { redirect } from "next/navigation";
-import { title } from "process";
 import { z } from "zod";
 
 const productSchema = z.object({
