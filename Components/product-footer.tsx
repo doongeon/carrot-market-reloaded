@@ -41,7 +41,7 @@ export default function ProductFooter({
   }
 
   return (
-    <div className="fixed bottom-0 left-[50%] -translate-x-1/2 w-full max-w-screen-md bg-black flex items-center justify-between py-5 px-5 rounded-t-3xl ">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-screen-md bg-neutral-800 flex items-center justify-between py-5 px-5 rounded-t-3xl sm:text-lg">
       <span className="text-sm">{`${formatToWon(product!.price)}원`}</span>
       {sessionId === product!.userId! ? (
         <div className="primary-btn w-max px-2 bg-red-500 text-base">삭제</div>
