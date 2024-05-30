@@ -5,11 +5,10 @@ export default function Layout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
-
   return (
     <>
-      {modal}
       {children}
+      {modal}
     </>
   );
 }

@@ -1,21 +1,19 @@
 import Image from "next/image";
 import Modal from "./modal";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { UserIcon } from "@heroicons/react/24/solid";
 import ProductFooter from "@/Components/product-footer";
 
 import getProduct from "./action";
 import { getSession } from "@/libs/session";
 
-
-
-
-
 export default async function InterceptProducts({
   params: { id: productId },
 }: {
   params: { id: number };
 }) {
+  if (isNaN(productId)) return null;
+
   const product = await getProduct(Number(productId));
   const session = await getSession();
 
@@ -44,7 +42,8 @@ export default async function InterceptProducts({
           </div>
         </div>
       </div>
-      <ProductFooter sessionId={session.id!} product={product}/>
+
+      <ProductFooter sessionId={session.id!} product={product} />
     </Modal>
   );
 }
