@@ -2,6 +2,7 @@ import ChatRoomList from "./components/chatroom-list";
 import { getChatroomsViaSession, getUserIdViaSession } from "./actions";
 
 import { Metadata } from "next";
+import TopBar from "@/Components/top-bar";
 
 export const metadata: Metadata = {
   title: "채팅",
@@ -15,9 +16,7 @@ export default async function Chats() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-2xl p-2 font-bold border-b-2 border-neutral-600">
-        채팅방
-      </h1>
+      <TopBar title="채팅" />
       <ChatRoomList initialChatrooms={chatrooms} userId={userId} />
     </div>
   );

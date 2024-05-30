@@ -1,6 +1,6 @@
 "use client";
 
-import { useChatrommPreview } from "../services";
+import { useChatrommPreview } from "../hooks";
 import { MessagePreviewProps } from "../types";
 
 export default function ChatroomPreview({
