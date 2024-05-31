@@ -1,23 +1,34 @@
-import { getPost } from "./gateway";
+import { getComments, getPost } from "./gateway";
+import TopBar from "@/Components/top-bar";
+import Post from "./components/post";
+import { getSession } from "@/libs/session";
+import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
-export default async function Post({
+export const metadata: Metadata = {
+  title: "포스트",
+};
+
+export default async function Page({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  
-
   console.log(id);
-  // const post = await getPost();
+  const post = await getPost(Number(id));
+
+  if (!post) redirect("/posts");
+
+  const initialComments = await getComments(post?.id!);
+
+  const session = await getSession();
+
+  const like = Boolean(post?.Like.find((like) => like.userId == session.id));
 
   return (
-    <div>
-      <div>
-        <div>
-          <h1></h1>
-          <span></span>
-        </div>
-      </div>
+    <div className="relative flex flex-col gap-5">
+      <TopBar title="포스트" />
+      <Post post={post} initialComments={initialComments} like={like} />
     </div>
   );
 }

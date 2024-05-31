@@ -33,7 +33,7 @@ export default function ProductItem({
     <motion.div
       ref={ref}
       key={id}
-      className="w-full flex gap-5 items-center bg-neutral-800 rounded-md  py-3 px-3 hover:bg-neutral-900 focus:bg-neutral-900 cursor-pointer"
+      className="w-full flex gap-5 items-center bg-neutral-800 rounded-md py-3 px-3 hover:bg-neutral-700 transition-colors duration-300 cursor-pointer"
       style={{
         transition: "linear 0.2s",
         opacity,
@@ -41,7 +41,7 @@ export default function ProductItem({
       onClick={() => {
         router.push(`/products/${id}`, { scroll: false });
       }}
-      transition={{duration: 0.05}}
+      transition={{ duration: 0.05 }}
     >
       <div className="w-40 aspect-square rounded-md flex items-center justify-center overflow-hidden">
         <Image alt="product img" src={photo} width={200} height={200} />

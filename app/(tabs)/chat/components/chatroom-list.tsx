@@ -27,7 +27,7 @@ export default function ChatRoomList({
             <Link
               href={`/chatroom/${chatroom.id}`}
               key={chatroom.id}
-              className="flex gap-4 p-5 items-center bg-neutral-800"
+              className="flex gap-4 p-5 items-center bg-neutral-800 hover:bg-neutral-700 transition-colors duration-300 rounded-md"
             >
               <div className="relative size-10">
                 {chatroom.users

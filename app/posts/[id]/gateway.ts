@@ -8,6 +8,7 @@ export async function getPost(postId: number) {
     include: {
       Like: true,
       Comment: true,
+      user: true,
     },
   });
 
@@ -30,4 +31,28 @@ export async function getComments(postId: number) {
   });
 
   return comments;
+}
+
+export async function createComment(
+  postId: number,
+  userId: number,
+  text: string
+) {
+  const comment = await db.comment.create({
+    data: {
+      postId,
+      text,
+      userId,
+    },
+    include: {
+      user: {
+        select: {
+          username: true,
+          avatar: true,
+        },
+      },
+    },
+  });
+
+  return comment;
 }
