@@ -15,9 +15,9 @@ export default async function Chats() {
   const userId = await getUserIdViaSession();
 
   return (
-    <div className="flex flex-col gap-5">
+    <>
       <TopBar title="채팅" />
       <ChatRoomList initialChatrooms={chatrooms} userId={userId} />
-    </div>
+    </>
   );
 }

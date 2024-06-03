@@ -1,7 +1,7 @@
 "use server";
 
 import { getSession } from "@/libs/session";
-import { createComment } from "./gateway";
+import { createComment, deletePost, updatePost } from "./gateway";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { TCreateComment } from "./types";
@@ -37,3 +37,30 @@ export const handleCommentForm = async (postId: number, text: string) => {
     comment,
   };
 };
+
+export async function handleDeletePost(postId: number, postAuthor: number) {
+  const session = await getSession();
+
+  if (!session.id) return null;
+  if (session.id !== postAuthor) return null;
+
+  const post = await deletePost(postId);
+
+  return post;
+}
+
+export async function handleUpdatePost(
+  postId: number,
+  postAuthor: number,
+  title: string,
+  text: string
+) {
+  const session = await getSession();
+
+  if (!session.id) return null;
+  if (session.id !== postAuthor) return null;
+
+  const post = await updatePost(postId, title, text);
+
+  return post;
+}

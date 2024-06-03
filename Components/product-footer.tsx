@@ -1,4 +1,4 @@
-import getProduct from "@/app/(tabs)/home/@modal/(..)products/[id]/action";
+import getProduct from "@/app/(tabs)/product/[id]/action";
 import db from "@/libs/db";
 import { getSession } from "@/libs/session";
 

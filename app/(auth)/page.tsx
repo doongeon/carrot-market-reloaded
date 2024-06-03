@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="w-full min-h-screen flex flex-col justify-between p-6">
+    <div className="w-full h-[100vh] flex flex-col justify-between px-6 py-10">
       <div className="my-auto flex flex-col items-center gap-2">
         <span className="text-9xl">🥕</span>
         <h1 className="text-4xl">당근</h1>

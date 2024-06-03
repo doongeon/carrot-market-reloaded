@@ -6,6 +6,8 @@ import { ChatListProps } from "../types";
 import FormBtn from "@/Components/form-btn";
 import { useChatList } from "../hooks/useChatList";
 import Link from "next/link";
+import Smooth from "@/Components/smooth";
+import SmoothLink from "@/Components/smooth-link";
 
 export default function ChatList({
   chatroom,
@@ -19,11 +21,11 @@ export default function ChatList({
   });
 
   return (
-    <>
+    <Smooth>
       <div className="fixed w-full max-w-screen-md top-0 left-1/2 rounded-b-lg p-3 bg-neutral-800 z-10 -translate-x-1/2">
-        <Link href={"/chat"} className="primary-btn size-6">
+        <SmoothLink to={`chat`} className="primary-btn size-6">
           <ArrowLeftIcon className="size-4 font-bold" />
-        </Link>
+        </SmoothLink>
       </div>
       <div className="flex flex-col gap-3 justify-end overflow-y-scroll mb-20 mt-12">
         {msgs.map((msg) => {
@@ -67,6 +69,6 @@ export default function ChatList({
         />
         <FormBtn className="primary-btn w-max px-3 py-1" text="➚" />
       </form>
-    </>
+    </Smooth>
   );
 }

@@ -1,8 +1,7 @@
 import { formatToTimeAge, formatToWon } from "@/libs/utils";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
 
 interface ProductItemProps {
   id: number;
@@ -20,24 +19,11 @@ export default function ProductItem({
   price,
 }: ProductItemProps) {
   const router = useRouter();
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref });
-
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.01, 0.99, 1],
-    [0.1, 1, 1, 0.1]
-  );
 
   return (
     <motion.div
-      ref={ref}
       key={id}
       className="w-full flex gap-5 items-center bg-neutral-800 rounded-md py-3 px-3 hover:bg-neutral-700 transition-colors duration-300 cursor-pointer"
-      style={{
-        transition: "linear 0.2s",
-        opacity,
-      }}
       onClick={() => {
         router.push(`/products/${id}`, { scroll: false });
       }}

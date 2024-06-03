@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { RecoilRoot } from "recoil";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-neutral-900 text-white max-w-screen-md mx-auto px-2 py-5 mt-10`}
+        className={`${inter.className} bg-neutral-900 text-white max-w-screen-md mx-auto px-2`}
       >
         {children}
       </body>

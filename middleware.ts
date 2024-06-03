@@ -23,10 +23,10 @@ const publicUrls: Routes = {
 export async function middleware(req: NextRequest) {
   const session = await getSession();
   const isPublicReq = publicUrls[req.nextUrl.pathname];
-  if (!session.id) {
-    if (!isPublicReq) return NextResponse.redirect(new URL("/", req.url));
-  } else {
-    if (isPublicReq)
-      return NextResponse.redirect(new URL("/home", req.url));
-  }
+  // if (!session.id) {
+  //   if (!isPublicReq) return NextResponse.redirect(new URL("/", req.url));
+  // } else {
+  //   if (isPublicReq)
+  //     return NextResponse.redirect(new URL("/home", req.url));
+  // }
 }

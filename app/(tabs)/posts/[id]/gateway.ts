@@ -1,4 +1,5 @@
 import db from "@/libs/db";
+import { revalidatePath } from "next/cache";
 
 export async function getPost(postId: number) {
   const post = await db.post.findUnique({
@@ -11,6 +12,38 @@ export async function getPost(postId: number) {
       user: true,
     },
   });
+
+  return post;
+}
+
+export async function deletePost(postId: number) {
+  const post = await db.post.delete({
+    where: {
+      id: postId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return post;
+}
+
+export async function updatePost(postId: number, title: string, text: string) {
+  const post = await db.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      title,
+      text,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  revalidatePath("/post/[id]", "page");
 
   return post;
 }

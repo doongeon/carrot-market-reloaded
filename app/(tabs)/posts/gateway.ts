@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/libs/db";
+import { revalidatePath } from "next/cache";
 
 export async function getPosts() {
   const posts = await db.post.findMany({
@@ -51,4 +52,21 @@ export async function getComments(postId: number) {
   });
 
   return comments;
+}
+
+export async function createPost(userId: number, text: string, title: string) {
+  const post = await db.post.create({
+    data: {
+      text,
+      title,
+      userId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  revalidatePath("/posts");
+
+  return post;
 }

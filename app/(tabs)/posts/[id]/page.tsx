@@ -14,7 +14,6 @@ export default async function Page({
 }: {
   params: { id: string };
 }) {
-  console.log(id);
   const post = await getPost(Number(id));
 
   if (!post) redirect("/posts");
@@ -26,9 +25,9 @@ export default async function Page({
   const like = Boolean(post?.Like.find((like) => like.userId == session.id));
 
   return (
-    <div className="relative flex flex-col gap-5">
+    <div className="w-full relative flex flex-col gap-5 my-5">
       <TopBar title="포스트" />
-      <Post post={post} initialComments={initialComments} like={like} />
+      <Post post={post} initialComments={initialComments} like={like} userId={session.id} />
     </div>
   );
 }

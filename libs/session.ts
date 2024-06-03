@@ -1,7 +1,7 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 
-interface Session {
+export interface Session {
   id?: number;
   username?: string;
   avatar?: string | null;

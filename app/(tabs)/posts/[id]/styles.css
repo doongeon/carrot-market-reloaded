@@ -1,0 +1,45 @@
+.relative-rounded-full {
+  position: relative;
+  border-radius: 9999px;
+  padding: 0.25rem; /* 1 */
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to bottom right, #f56565, #4299e1);
+    z-index: -10;
+    border-radius: 0.75rem; /* equivalent to rounded-xl */
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+
+/* 
+.relative-rounded-full::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom right, #f56565, #4299e1);
+  z-index: -10;
+  border-radius: 0.75rem; /* equivalent to rounded-xl */
+  /* opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.relative-rounded-full:hover::before {
+  opacity: 1;
+} */ 
