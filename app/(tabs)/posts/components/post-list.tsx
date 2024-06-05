@@ -5,10 +5,10 @@ import { Posts } from "../types";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import Smooth from "@/Components/smooth";
 import SmoothLink from "@/Components/smooth-link";
-import { useRecoilState } from "recoil";
-import { pageExitAtom, pageToAtom, writePostModalAtom } from "@/libs/atom";
 import { useState } from "react";
 import CreatePostModal from "./create-post-modal";
+import { writePostStateAtom } from "@/libs/atom";
+import { useRecoilState } from "recoil";
 
 interface PostListProps {
   initialPost: Posts;
@@ -16,6 +16,8 @@ interface PostListProps {
 }
 
 export default function PostList({ initialPost, userId }: PostListProps) {
+  const [writePostState, setWritePostState] =
+    useRecoilState(writePostStateAtom);
   const [posts, setPosts] = useState(initialPost);
 
   return (
@@ -52,7 +54,7 @@ export default function PostList({ initialPost, userId }: PostListProps) {
         )}
       </Smooth>
 
-      <CreatePostModal userId={userId} />
+      {writePostState && <CreatePostModal userId={userId} />}
     </>
   );
 }

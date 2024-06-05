@@ -10,4 +10,8 @@
   .disable-btn {
     @apply flex items-center justify-center rounded-lg font-semibold bg-neutral-600 text-neutral-400 cursor-not-allowed
   }
+
+  .error-span {
+    @apply text-red-500 text-sm
+  }
 }

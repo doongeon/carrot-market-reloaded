@@ -22,7 +22,7 @@ export default async function InterceptProducts({
   return (
     <Modal>
       <div className="w-full max-w-screen-sm aspect-[1/1.5] sm:aspect-[1/1.2] bg-black opacity-100 overflow-hidden flex flex-col gap-4 items-center overflow-y-scroll">
-        <div className="relative w-full aspect-square">
+        <div className="relative w-full max-w-96 aspect-square">
           <Image src={product?.photo!} alt="product photo" fill />
         </div>
         <div className="w-full flex flex-col gap-3 px-3 pb-5">

@@ -12,16 +12,16 @@ export default function CreatePostModal({ userId }: CreatePostModalProps) {
   const {
     title,
     text,
-    writeModal,
+    writePostState,
     setTitle,
     setText,
-    setWritePostModal,
+    setWritePostState,
     onSubmitPostForm,
   } = useCreatePostModal({ userId });
 
   return (
-    <AnimatePresence>
-      {writeModal ? (
+    <>
+      {writePostState && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -31,7 +31,7 @@ export default function CreatePostModal({ userId }: CreatePostModalProps) {
           <div className="min-h-40 min-w-72 bg-neutral-800 rounded-md flex flex-col gap-3 items-start justify-center px-2 py-5">
             <div className="w-full flex justify-between">
               <span>새로운 포스트</span>
-              <button onClick={() => setWritePostModal(false)}>
+              <button onClick={() => setWritePostState(false)}>
                 <XMarkIcon className="size-5" />
               </button>
             </div>
@@ -67,7 +67,7 @@ export default function CreatePostModal({ userId }: CreatePostModalProps) {
             </form>
           </div>
         </motion.div>
-      ) : null}
-    </AnimatePresence>
+      )}
+    </>
   );
 }

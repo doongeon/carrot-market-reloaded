@@ -27,7 +27,12 @@ export default async function Page({
   return (
     <div className="w-full relative flex flex-col gap-5 my-5">
       <TopBar title="포스트" />
-      <Post post={post} initialComments={initialComments} like={like} userId={session.id} />
+      <Post
+        post={post}
+        initialComments={initialComments}
+        like={like}
+        userId={session.id}
+      />
     </div>
   );
 }

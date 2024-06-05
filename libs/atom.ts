@@ -1,3 +1,4 @@
+import { TComments } from "@/app/(tabs)/posts/[id]/types";
 import { atom } from "recoil";
 
 export const pageExitAtom = atom({
@@ -10,7 +11,17 @@ export const pageToAtom = atom({
   default: "",
 });
 
-export const writePostModalAtom = atom({
-  key: "writePostModalAtom",
+export const writePostStateAtom = atom({
+  key: "writePostStateAtom",
   default: false,
+});
+
+export const writeProductStateAtom = atom({
+  key: "writeProductStateAtom",
+  default: false,
+});
+
+export const postCommentsAtom = atom<TComments>({
+  key: "postCommentsAtom",
+  default: [],
 });

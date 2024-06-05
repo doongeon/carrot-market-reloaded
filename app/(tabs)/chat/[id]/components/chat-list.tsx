@@ -23,7 +23,7 @@ export default function ChatList({
   return (
     <Smooth>
       <div className="fixed w-full max-w-screen-md top-0 left-1/2 rounded-b-lg p-3 bg-neutral-800 z-10 -translate-x-1/2">
-        <SmoothLink to={`chat`} className="primary-btn size-6">
+        <SmoothLink to={`/chat`} className="primary-btn size-6">
           <ArrowLeftIcon className="size-4 font-bold" />
         </SmoothLink>
       </div>

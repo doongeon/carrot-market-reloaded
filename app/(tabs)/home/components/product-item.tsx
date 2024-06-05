@@ -29,8 +29,8 @@ export default function ProductItem({
       }}
       transition={{ duration: 0.05 }}
     >
-      <div className="w-40 aspect-square rounded-md flex items-center justify-center overflow-hidden">
-        <Image alt="product img" src={photo} width={200} height={200} />
+      <div className="relative w-40 aspect-square rounded-md flex items-center justify-center overflow-hidden">
+        <Image alt="product img" src={photo} fill quality={10} />
       </div>
       <div className="w-full flex flex-col items-start gap-2">
         <div className="w-full flex flex-col items-start">

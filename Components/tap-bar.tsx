@@ -18,13 +18,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { TapBarBtn } from "./tap-bar-btn";
-import { writePostModalAtom } from "@/libs/atom";
+import { writePostStateAtom, writeProductStateAtom } from "@/libs/atom";
 import { useRecoilState } from "recoil";
 import { getSession } from "@/libs/session";
 
 export default function TapBar() {
   const [writePostModal, setWritePostModal] =
-    useRecoilState(writePostModalAtom);
+    useRecoilState(writePostStateAtom);
+  const [writeProductState, setWriteProductState] = useRecoilState(
+    writeProductStateAtom
+  );
   const pathname = usePathname();
 
   return (
@@ -75,13 +78,16 @@ export default function TapBar() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <Link
-                  href={"/product"}
+                <button
+                  // href={"/product"}
                   className="absolute bottom-20 right-5 h-7 p-2 bg-orange-600 rounded-full flex gap-1 items-center justify-center hover:opacity-80 transition-opacity duration-400"
+                  onClick={async () => {
+                    setWriteProductState(true);
+                  }}
                 >
                   <PlusIcon className="size-5" />
                   <span className="min-w-max text-sm">만들기</span>
-                </Link>
+                </button>
               </motion.div>
             ) : null}
           </AnimatePresence>

@@ -1,6 +1,31 @@
 import db from "@/libs/db";
 import { revalidatePath } from "next/cache";
 
+export async function createLike(postId: number, userId: number) {
+  const like = await db.like.create({
+    data: {
+      postId,
+      userId,
+    },
+  });
+
+  revalidatePath("/posts")
+
+  return like;
+}
+
+export async function deleteLike(postId: number, userId: number) {
+  const like = await db.like.delete({
+    where: {
+      postId_userId: { userId, postId },
+    },
+  });
+
+  revalidatePath("/posts")
+
+  return like;
+}
+
 export async function getPost(postId: number) {
   const post = await db.post.findUnique({
     where: {
@@ -42,6 +67,8 @@ export async function updatePost(postId: number, title: string, text: string) {
       id: true,
     },
   });
+
+  if (!post) return null;
 
   revalidatePath("/post/[id]", "page");
 

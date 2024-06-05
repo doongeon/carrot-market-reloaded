@@ -1,16 +1,43 @@
 "use server";
 
 import { getSession } from "@/libs/session";
-import { createComment, deletePost, updatePost } from "./gateway";
+import {
+  createComment,
+  createLike,
+  deleteLike,
+  deletePost,
+  updatePost,
+} from "./gateway";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { TCreateComment } from "./types";
+import { revalidatePath } from "next/cache";
 
 const commentSchema = z
   .string()
   .min(1, { message: "공백밖에 없어요..." })
   .max(200, { message: "댓글은 최대 100글자 입니다." })
   .regex(/^(?!\s*$)[\s\S]{1,100}$/, { message: "공백밖에 없어요..." });
+
+export const handleLike = async (postId: number, likeState: boolean) => {
+  const session = await getSession();
+
+  if (!session.id) return null;
+
+  if (!likeState) {
+    const newLike = await createLike(postId, session.id);
+
+    if (!newLike) return null;
+    return { like: true };
+  }
+
+  if (likeState) {
+    const newLike = await deleteLike(postId, session.id);
+
+    if (!newLike) return null;
+    return { like: false };
+  }
+};
 
 export const handleCommentForm = async (postId: number, text: string) => {
   const session = await getSession();
@@ -19,8 +46,6 @@ export const handleCommentForm = async (postId: number, text: string) => {
     alert("세션이 만료되었습니다.");
     redirect("/login");
   }
-
-  console.log(text);
 
   const zodResult = commentSchema.safeParse(text);
 
@@ -45,6 +70,8 @@ export async function handleDeletePost(postId: number, postAuthor: number) {
   if (session.id !== postAuthor) return null;
 
   const post = await deletePost(postId);
+
+  revalidatePath("/posts");
 
   return post;
 }

@@ -1,4 +1,4 @@
-import { pageExitAtom, pageToAtom, writePostModalAtom } from "@/libs/atom";
+import { pageExitAtom, pageToAtom, writePostStateAtom } from "@/libs/atom";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import handlePostForm from "../actions";
@@ -12,14 +12,15 @@ export default function useCreatePostModal({
 }: useCreatePostModalProps) {
   const [pageExit, setPageExit] = useRecoilState(pageExitAtom);
   const [pageTo, setPageTo] = useRecoilState(pageToAtom);
-  const [writeModal, setWritePostModal] = useRecoilState(writePostModalAtom);
+  const [writePostState, setWritePostState] =
+    useRecoilState(writePostStateAtom);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
   useEffect(() => {
-    if (writeModal && !userId) {
+    if (writePostState && !userId) {
       alert("로그인이 필요합니다.");
-      setWritePostModal(false);
+      setWritePostState(false);
     }
   });
 
@@ -31,22 +32,22 @@ export default function useCreatePostModal({
 
     const formState = await handlePostForm(title, text);
 
-    if (!formState ||!formState.success) {
+    if (!formState || !formState.success) {
       alert("로그인이 필요합니다");
       return;
     }
 
     setText("");
     setTitle("");
-    setWritePostModal(false);
+    setWritePostState(false);
     setPageExit(true);
     setPageTo(`/posts/${formState.newPost?.id}`);
   }
 
   return {
     onSubmitPostForm,
-    writeModal,
-    setWritePostModal,
+    writePostState,
+    setWritePostState,
     text,
     title,
     setTitle,

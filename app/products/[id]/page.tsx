@@ -22,7 +22,7 @@ export default async function ProductDetail({
 
   return (
     <div className="w-full max-w-screen-md flex flex-col relative">
-      <div className="aspect-square w-full max-w-screen-sm mx-auto relative">
+      <div className="aspect-square w-full max-w-96 mx-auto relative">
         <Image src={product.photo} alt="product img" fill />
       </div>
       <div className="min-h-[20vh]">

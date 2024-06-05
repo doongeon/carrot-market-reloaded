@@ -4,7 +4,13 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
-import { IdentityPoolId, albumBucketName, apiUrl, region } from "./secrets";
+import {
+  IdentityPoolId,
+  S3_URL,
+  albumBucketName,
+  apiUrl,
+  region,
+} from "./secrets";
 
 export function getAWSClient() {
   const client = new S3Client({
@@ -14,8 +20,6 @@ export function getAWSClient() {
       identityPoolId: IdentityPoolId,
     }),
   });
-
-  console.log(client);
 
   return client;
 }
@@ -28,7 +32,6 @@ export async function deleteS3Object(client: S3Client, photoKey: string) {
 
   try {
     const response = await client.send(command);
-    console.log(response);
   } catch (err) {
     console.error(err);
   }
@@ -46,18 +49,15 @@ export async function postS3Object(
     ContentType: "image/jpeg",
   });
 
-  console.log("send command!");
   try {
     const response = await client.send(command);
-    console.log(response);
   } catch (err) {
     console.error(err);
   }
 }
 
-
 // fetch API를 사용하여 POST 요청 보내기
-export const putUser = () => {
+export function putUser() {
   console.log("put!");
 
   const requestData = {
@@ -85,9 +85,9 @@ export const putUser = () => {
     .catch((error) => {
       console.error("Error:", error);
     });
-};
+}
 
-export const getUsers = () => {
+export function getUsers() {
   console.log("get users!");
 
   fetch(`${apiUrl}/users`, {
@@ -108,9 +108,9 @@ export const getUsers = () => {
     .catch((error) => {
       console.error("Error:", error);
     });
-};
+}
 
-export const deleteUser = () => {
+export function deleteUser() {
   console.log("delete!");
 
   fetch(`${apiUrl}/users/1`, {
@@ -131,5 +131,8 @@ export const deleteUser = () => {
     .catch((error) => {
       console.error("Error:", error);
     });
-};
+}
 
+export function getObjectURL(photoKey: string) {
+  return `${S3_URL}/${encodeURI(photoKey)}`;
+}
