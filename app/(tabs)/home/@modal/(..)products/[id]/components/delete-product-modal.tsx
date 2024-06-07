@@ -1,24 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import useDeletePostModal from "../hooks/useDeletePostModal";
+import useDeleteProduct from "../hooks/useDeleteProduct";
+import { useSetRecoilState } from "recoil";
+import { pageExitAtom, pageToAtom } from "@/libs/atom";
+import { useRouter } from "next/navigation";
 
-interface DeletePostModalProps {
-  postId: number;
-  authorId: number;
-  setDeletePostState: (modalState: boolean) => void;
+interface DeleteProductModalProps {
+  productId: number;
+  productOwnerId: number;
+  setDeleteProductState: (modalState: boolean) => void;
 }
 
-export default function DeletePostModal({
-  postId,
-  authorId,
-  setDeletePostState,
-}: DeletePostModalProps) {
-  const { onClickDeletePost } = useDeletePostModal({
-    postId,
-    authorId,
-    setDeletePostState,
+export default function DeleteProductModal({
+  productId,
+  productOwnerId,
+  setDeleteProductState,
+}: DeleteProductModalProps) {
+  const { onClickDeleteProduct } = useDeleteProduct({
+    productId,
+    productOwnerId,
+    setDeleteProductState,
   });
+  const router = useRouter();
 
   return (
     <motion.div
@@ -33,14 +37,17 @@ export default function DeletePostModal({
           <button
             className="w-full border border-neutral-500 rounded-md"
             onClick={() => {
-              setDeletePostState(false);
+              setDeleteProductState(false);
             }}
           >
             취소
           </button>
           <button
             className="w-full bg-red-500 rounded-md"
-            onClick={onClickDeletePost}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickDeleteProduct();
+            }}
           >
             삭제
           </button>

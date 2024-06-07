@@ -2,16 +2,8 @@
 
 import db from "@/libs/db";
 import { getSession } from "@/libs/session";
-import { error } from "console";
 import { redirect } from "next/navigation";
-import { z } from "zod";
-
-const productFomrSchema = z.object({
-  photo: z.string(),
-  title: z.string().min(1).max(20),
-  price: z.coerce.number().min(0).max(10000000),
-  description: z.string().min(1).max(200),
-});
+import { serverSchema } from "./form-schema";
 
 export async function handleProductForm(formData: FormData) {
   const session = await getSession();
@@ -25,14 +17,12 @@ export async function handleProductForm(formData: FormData) {
     };
   }
 
-  const data = {
+  const zodResult = serverSchema.safeParse({
     photo: formData.get("photo"),
     title: formData.get("title"),
     price: formData.get("price"),
     description: formData.get("description"),
-  };
-
-  const zodResult = productFomrSchema.safeParse(data);
+  });
 
   if (!zodResult.success) {
     return {
@@ -54,5 +44,5 @@ export async function handleProductForm(formData: FormData) {
     },
   });
 
-  redirect(`/products/${product.id}`)
+  redirect(`/products/${product.id}`);
 }

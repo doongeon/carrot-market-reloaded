@@ -11,6 +11,11 @@ export const pageToAtom = atom({
   default: "",
 });
 
+export const removedProductIdAtom = atom<number | null>({
+  key: "removedProductIdAtom",
+  default: null,
+});
+
 export const writePostStateAtom = atom({
   key: "writePostStateAtom",
   default: false,

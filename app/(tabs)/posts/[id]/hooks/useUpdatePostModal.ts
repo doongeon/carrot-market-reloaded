@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { handleUpdatePost } from "../actions";
-import { pageExitAtom, pageToAtom, writePostModalAtom } from "@/libs/atom";
+import { pageExitAtom, pageToAtom, writePostStateAtom } from "@/libs/atom";
 import { useState } from "react";
 
 interface useCreatePostModalProps {
@@ -14,7 +14,8 @@ export default function useUpdatePostModal({
 }: useCreatePostModalProps) {
   const [pageExit, setPageExit] = useRecoilState(pageExitAtom);
   const [pageTo, setPageTo] = useRecoilState(pageToAtom);
-  const [writeModal, setWritePostModal] = useRecoilState(writePostModalAtom);
+  const [writePostState, setWritePostState] =
+    useRecoilState(writePostStateAtom);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
@@ -30,15 +31,15 @@ export default function useUpdatePostModal({
 
     setText("");
     setTitle("");
-    setWritePostModal(false);
+    setWritePostState(false);
     setPageExit(true);
     setPageTo(`/posts/${formState.id}`);
   }
 
   return {
     onUpdatePost,
-    writeModal,
-    setWritePostModal,
+    writePostState,
+    setWritePostState,
     text,
     title,
     setTitle,

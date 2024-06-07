@@ -5,39 +5,10 @@ import useProductList from "../services";
 import { Products } from "../types";
 import ProductItem from "./product-item";
 import Smooth from "@/Components/smooth";
-import { pageExitAtom, pageToAtom, writeProductStateAtom } from "@/libs/atom";
-import { AnimatePresence, motion } from "framer-motion";
-import { PhotoIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { ChangeEvent, useEffect, useState } from "react";
-import {
-  deleteS3Object,
-  getAWSClient,
-  getObjectURL,
-  postS3Object,
-} from "@/libs/aws";
-import { handleProductForm } from "../actions";
-import { z } from "zod";
+import { removedProductIdAtom, writeProductStateAtom } from "@/libs/atom";
+import { useEffect } from "react";
 import CreateProductFormModal from "./create-product-form-modal";
-
-export const TITLE_MAX_LENGTH = 30;
-export const DESCRIPTION_MAX_LENGTH = 200;
-export const MAX_PRICE = 10000000;
-
-const formSchema = z.object({
-  photo: z.string().min(1, "이미지를 추가해 주세요"),
-  title: z
-    .string()
-    .min(1, "비어있어요.")
-    .max(TITLE_MAX_LENGTH, `최대 ${TITLE_MAX_LENGTH}글자에요.`),
-  price: z.coerce
-    .number({ message: "가격을 적어주세요" })
-    .min(1, "가격을 적어주세요")
-    .max(MAX_PRICE, `최대 ${MAX_PRICE}원이에요.`),
-  description: z
-    .string()
-    .min(1, "비어있어요.")
-    .max(DESCRIPTION_MAX_LENGTH, `최대 ${DESCRIPTION_MAX_LENGTH}글자에요.`),
-});
+import { useRouter } from "next/navigation";
 
 interface ProductListProps {
   initialProducts: Products;

@@ -19,7 +19,7 @@ export default function Smooth({
   useEffect(() => {
     setPageExit(false);
     setPageTo("");
-  }, []);
+  }, [setPageExit, setPageTo]);
 
   return (
     <AnimatePresence

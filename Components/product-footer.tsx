@@ -1,16 +1,13 @@
-import getProduct from "@/app/(tabs)/home/@modal/(..)products/[id]/action";
+import { TProduct } from "@/app/(tabs)/home/@modal/(..)products/[id]/gateway";
 import db from "@/libs/db";
 import { getSession } from "@/libs/session";
 
 import { formatToWon } from "@/libs/utils";
-import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-export type Product = Prisma.PromiseReturnType<typeof getProduct>;
-
 interface ProductFooterProps {
-  sessionId: number | null;
-  product: Product;
+  sessionId?: number;
+  product: TProduct;
 }
 
 export default function ProductFooter({
@@ -40,12 +37,7 @@ export default function ProductFooter({
     <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-screen-md bg-neutral-800 flex items-center justify-between py-5 px-5 rounded-t-3xl sm:text-lg">
       <span className="text-sm">{`${formatToWon(product!.price)}원`}</span>
       {sessionId === product!.userId! && (
-        <div
-          className="primary-btn w-max px-2 bg-red-500 text-base"
-          onClick={() => {}}
-        >
-          삭제
-        </div>
+        <div className="primary-btn w-max px-2 bg-red-500 text-base">삭제</div>
       )}
       <form action={createChatRoom}>
         <button className="text-sm text-orange-600">채팅하기</button>

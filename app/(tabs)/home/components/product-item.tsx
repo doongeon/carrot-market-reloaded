@@ -1,7 +1,12 @@
+"use client";
+
+import { removedProductIdAtom } from "@/libs/atom";
 import { formatToTimeAge, formatToWon } from "@/libs/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { memo, useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 interface ProductItemProps {
   id: number;
@@ -11,13 +16,9 @@ interface ProductItemProps {
   price: number;
 }
 
-export default function ProductItem({
-  id,
-  title,
-  photo,
-  createdAt,
-  price,
-}: ProductItemProps) {
+export default memo(ProductItem);
+
+function ProductItem({ id, title, photo, createdAt, price }: ProductItemProps) {
   const router = useRouter();
 
   return (

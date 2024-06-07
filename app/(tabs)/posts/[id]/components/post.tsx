@@ -50,7 +50,7 @@ export default function Post({
     return () => {
       setComments([]);
     };
-  }, []);
+  }, [initialComments, setComments]);
 
   const toggleOptionState = () => {
     setOptionState((prev) => !prev);

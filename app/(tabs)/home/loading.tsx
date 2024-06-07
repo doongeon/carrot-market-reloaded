@@ -1,8 +1,6 @@
 "use client";
 
-import LoadingDots from "@/Components/loading-dots";
 import TopBar from "@/Components/top-bar";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function Loading() {
   return (

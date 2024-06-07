@@ -1,4 +1,4 @@
-import Ping from "@/Components/ping";
+
 import TopBar from "@/Components/top-bar";
 
 export default function Loading() {

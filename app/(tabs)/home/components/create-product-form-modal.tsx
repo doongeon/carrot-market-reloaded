@@ -4,10 +4,7 @@ import { PhotoIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import { useSetRecoilState } from "recoil";
 import useCreatePostForm from "../hooks/useCreatePostForm";
-
-export const TITLE_MAX_LENGTH = 30;
-export const DESCRIPTION_MAX_LENGTH = 200;
-export const MAX_PRICE = 10000000;
+import { DESCRIPTION_MAX_LENGTH, TITLE_MAX_LENGTH } from "../constants";
 
 export default function CreateProductFormModal() {
   const setWriteProductState = useSetRecoilState(writeProductStateAtom);
